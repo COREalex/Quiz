@@ -35,7 +35,14 @@ exports.ownershipRequired = function(req, res, next){
 
 // GET /quizzes
 exports.index = function(req, res, next) {
-	models.Quiz.findAll()
+	var busqueda = req.query.search || '';
+if (busqueda === ''){
+	busqueda = "%";
+}
+else { 
+	busqueda = "%" + busqueda.trim().replace(" ","%") + "%";
+} 	
+models.Quiz.findAll({ where: {question: {$like: busqueda}}})
 		.then(function(quizzes) {
 			res.render('quizzes/index.ejs', { quizzes: quizzes});
 		})
@@ -43,6 +50,7 @@ exports.index = function(req, res, next) {
 			next(error);
 		});
 };
+
 
 
 // GET /quizzes/:id

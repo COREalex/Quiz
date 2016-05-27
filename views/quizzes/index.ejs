@@ -1,6 +1,12 @@
+<p>
+	<form method="get" action="/quizzes"> 
+	<input type="text" name="search" placeholder="texto a buscar" />
+	<input type="submit" value="Buscar" />
+	</form>
+</p>
 
 <table>
-  <% for (var i in quizzes) { %>        
+  <% for (var i in quizzes.sort(function(q1,q2){return q1.question.localeCompare(q2.question)})) { %>        
      <tr>
         <td>
            <a href="/quizzes/<%= quizzes[i].id %>"><%= quizzes[i].question %></a>
